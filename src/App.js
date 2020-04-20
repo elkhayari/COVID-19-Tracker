@@ -53,7 +53,7 @@ class App extends React.Component {
     return (
       <div className={styles.container}>
         <img src={coronaImage}  className={styles.image} alt='covid-19'/>
-       { //<Location position={position} handleCurrentLocation={this.handleCurrentLocation} />} 
+    { /*<Location position={position} handleCurrentLocation={this.handleCurrentLocation} />*/} 
         <Cards data={data} />
         <CountryPicker handleCountryChange={this.handleCountryChange} />
         <Chart data={data} country={country}/>
