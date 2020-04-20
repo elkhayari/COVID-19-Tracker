@@ -38,7 +38,7 @@ const Cards = ({ data: { confirmed, recovered, deaths, lastUpdate } }) => {
                       className={cx(styles.card, styles.recovred)}>
                     <CardContent>
                         <Typography color="textSecondary" gutterBottom>
-                            Recovred
+                            Recovered
                         </Typography>
                         <Typography variant="h5" gutterBottom>
                             <CountUp start={0} end={recovered.value} duration={5} separator=",">
