@@ -3,13 +3,19 @@ import React from 'react';
 import { Cards, Chart, CountryPicker } from './components'
 import styles from './App.module.css';
 import { fetchData } from './api';
-import {coronaImage} from './images/image.png'
+import {getCurrentPosition} from './api/getLocation'
+import coronaImage from './images/image.png'
+
+import Location from './components/Location/Location' 
 
 class App extends React.Component {
 
   state = {
     data: {},
-    country: ''
+    country: '',
+    position: {
+      atl: 'hello'
+    }
   }
 
   async componentDidMount() {
@@ -23,22 +29,31 @@ class App extends React.Component {
 
   handleCountryChange = async (country) => {
     //fetch data
-    console.log('App country ', country)
+    
     const fetchedData = await fetchData(country)
-    console.log(fetchedData)
+   
     // set the state
     this.setState({
       data: fetchedData,
       country: country,
     })
   }
+
+  handleCurrentLocation = async () =>{
+    const currentPostion =  getCurrentPosition()
+    
+    this.setState({
+      position: currentPostion
+    })
+  }
   render() {
     //1
-    const { data, country } = this.state
+    const { data, country, position } = this.state
     
     return (
       <div className={styles.container}>
         <img src={coronaImage}  className={styles.image} alt='covid-19'/>
+       { //<Location position={position} handleCurrentLocation={this.handleCurrentLocation} />} 
         <Cards data={data} />
         <CountryPicker handleCountryChange={this.handleCountryChange} />
         <Chart data={data} country={country}/>

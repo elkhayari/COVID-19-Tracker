@@ -8,7 +8,7 @@ import styles from './Chart.module.css'
 const Chart = ({data:{ confirmed, recovered, deaths}, country}) =>{
     
     //Global data
-    console.log('new data',confirmed)
+   
     const [dailyData, setDailyData] = useState([])  // <=> state= {dalyData={}} in a class
 
     useEffect(() => {
@@ -47,7 +47,6 @@ const Chart = ({data:{ confirmed, recovered, deaths}, country}) =>{
 
     );
 
-console.log('bef barchart', confirmed, recovered, deaths)
     const barChart = (
         confirmed
         ? (<Bar
