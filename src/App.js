@@ -1,18 +1,23 @@
 import React from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css'
 
-import { Cards, Chart, CountryPicker } from './components'
+import { Cards, Chart, CountryPicker, CountryVsCoutryPicker, ChartComparaison } from './components'
 import styles from './App.module.css';
 import { fetchData } from './api';
-import {getCurrentPosition} from './api/getLocation'
+
 import coronaImage from './images/image.png'
 
-import Location from './components/Location/Location' 
+
 
 class App extends React.Component {
 
   state = {
     data: {},
     country: '',
+    dataCountry_1: {},
+    country_1: '',
+    dataCountry_2: {},
+    country_2: '',
     position: {
       atl: 'hello'
     }
@@ -39,24 +44,49 @@ class App extends React.Component {
     })
   }
 
-  handleCurrentLocation = async () =>{
-    const currentPostion =  getCurrentPosition()
-    
+ 
+
+  //handle country vs country  picker 
+  handleCountryChange_1 =  async (country) =>{
+    //fetch data for a country
+    const fetchedData = await fetchData(country)
+   
+    // set the state
     this.setState({
-      position: currentPostion
+      dataCountry_1: fetchedData,
+      country_1: country,
     })
+    console.log('country 1', this.state.country_1)
+    console.log('data', this.state.dataCountry_1)
   }
+  handleCountryChange_2 =  async (country) =>{
+    //fetch data for a country
+    const fetchedData = await fetchData(country)
+   
+    // set the state
+    this.setState({
+      dataCountry_2: fetchedData,
+      country_2: country,
+    })
+    console.log('country 2', this.state.country_2)
+    console.log('data ', this.state.dataCountry_2)
+  }
+
   render() {
     //1
-    const { data, country, position } = this.state
+   
+    const { data, country, country_1, country_2 } = this.state
     
     return (
       <div className={styles.container}>
         <img src={coronaImage}  className={styles.image} alt='covid-19'/>
-    { /*<Location position={position} handleCurrentLocation={this.handleCurrentLocation} />*/} 
         <Cards data={data} />
         <CountryPicker handleCountryChange={this.handleCountryChange} />
         <Chart data={data} country={country}/>
+        <CountryVsCoutryPicker handleCountryChange_1={this.handleCountryChange_1}
+                              handleCountryChange_2={this.handleCountryChange_2}/>
+     
+        <ChartComparaison country_1={country_1} country_2={country_2}/>
       </div>
     );
   }

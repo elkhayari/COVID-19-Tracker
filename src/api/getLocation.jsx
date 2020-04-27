@@ -3,11 +3,9 @@ import React from 'react'
 export const getCurrentPosition = async () => {
    
     try {
-        navigator.geolocation.getCurrentPosition(data => {
-            return data
-        }, (error => console.log(error)))
-      
-       
+        const data = await  navigator.geolocation.getCurrentPosition()
+            
+        console.log(data)
  
     } catch (error) {
        console.log('error', error);
